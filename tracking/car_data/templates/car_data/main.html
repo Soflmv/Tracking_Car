@@ -1,0 +1,79 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TRACKING</title>
+    <link rel="stylesheet" href="{% static 'car_data/css/main.css' %}">
+</head>
+<body>
+<!--Таблица-->
+<table class="table">
+<thead>
+    <tr>
+      <th scope="col">Марка</th>
+      <th scope="col">Имя водителя</th>
+      <th scope="col">Номер</th>
+      <th scope="col">Дата</th>
+      <th scope="col">Скорость</th>
+      <th scope="col">Координаты</th>
+      <th scope="col">Пробег</th>
+      <th scope="col">Состояние топлива</th>
+    </tr>
+</thead>
+<tbody>
+    {% for i in data_all %}
+        <tr>
+            <td>{{i.car_brand}}</td>
+            <td>{{i.driver}}</td>
+            <td>{{i.car_number}}</td>
+            <td>{{i.date}}</td>
+            <td>{{i.speed}}</td>
+            <td>{{i.coordinates}}</td>
+            <td>{{i.run}}</td>
+            <td>{{i.fuel_condition}}</td>
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+<main>
+<!--Кнопки-->
+<form action="{% url 'clear' %}" method="post">
+    {% csrf_token %}
+    <button class="custom-btn btn-7"><span>Обновить</span></button>
+</form>
+<!--Формы с данными-->
+<form class="data_cars" action="{% url 'car_data_indb' %}"  method="post">
+    {% csrf_token %}
+    <button class="custom-btn btn-5" type="submit">Получить данные</button>
+<label for="exampleFormControlSelect1"></label>
+    <select class="data_car" name="data_car" id="exampleFormControlSelect1" >
+        <option hidden>Выбрать автомобиль</option>
+            <optgroup label = "Номер и марка автомобиля:">
+            <option value="MERCEDES-2312">770099 - MERCEDES-2312</option>
+            <option value="VOLVO-075">84325 - VOLVO-075</option>
+        </optgroup>
+    </select>
+    <select class="date" name="date" id="exampleFormControlSelect2" >
+        <option hidden>Выбрать дату</option>
+        <optgroup label = "Дата:">
+            <option value="30102022">30.10.2022</option>
+            <option value="29102022">29.10.2022</option>
+            <option value="28102022">28.10.2022</option>
+            <option value="26102022">26.10.2022</option>
+        </optgroup>
+    </select>
+</form>
+<textarea readonly>
+Отчет об автомобиле:
+    Максимальная скорость, км/ч: {{max}}
+    Минимальная скорость, км/ч: {{min}}
+    Всего проехал, км: {{all_run}}
+    Расход топлива, л: {{all_fuel}}
+</textarea>
+</main>
+</body>
+</html>
