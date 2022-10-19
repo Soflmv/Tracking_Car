@@ -30,7 +30,10 @@ def car_data_indb(request):
         min_fuel = max_min_fuel.get('fuel_condition__min')
         all_fuel = max_fuel - min_fuel
 
+        remainder_fuel = Info.objects.filter(date=date).filter(car_brand=data_car).aggregate(Min('fuel_condition'))
+        rem_fuel = remainder_fuel.get('fuel_condition__min')
+
     return render(request, 'car_data/main.html', {'data_all': data_all, 'max': max, 'min': min,
-                                                  'all_run': all_run, 'all_fuel': all_fuel})
+                           'all_run': all_run, 'all_fuel': all_fuel, 'rem_fuel': rem_fuel})
 
 

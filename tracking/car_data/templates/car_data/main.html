@@ -12,6 +12,7 @@
 <body>
 <!--Таблица-->
 <table class="table">
+    <caption>Данные местонахождения и движения автомобилей</caption>
 <thead>
     <tr>
       <th scope="col">Марка</th>
@@ -43,7 +44,7 @@
 <!--Кнопки-->
 <form action="{% url 'clear' %}" method="post">
     {% csrf_token %}
-    <button class="custom-btn btn-7"><span>Обновить</span></button>
+    <button class="custom-btn btn-7"><span>Очистить форму</span></button>
 </form>
 <!--Формы с данными-->
 <form class="data_cars" action="{% url 'car_data_indb' %}"  method="post">
@@ -68,11 +69,13 @@
     </select>
 </form>
 <textarea readonly>
-Отчет об автомобиле:
-    Максимальная скорость, км/ч: {{max}}
-    Минимальная скорость, км/ч: {{min}}
+Отчет по выбранному автомобилю:
+
+    Макс. скорость, км/ч: {{max}}
+    Мин. скорость, км/ч: {{min}}
     Всего проехал, км: {{all_run}}
     Расход топлива, л: {{all_fuel}}
+    Осталось топлива, л: {{rem_fuel}}
 </textarea>
 </main>
 </body>

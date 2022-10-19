@@ -6,8 +6,8 @@ host = '127.0.0.1'
 port = 9999
 buffer_size = 1024
 
-data_car = 'MERCEDES-2312, Evgeniy_Smirnov, 770099, 26102022, 46, 2285652, 38, 2256'
-# data_car = 'VOLVO-075, Ivan Petrov, 84325, 28102022, 70, 6589562, 50, 2185'
+data_car = 'MERCEDES-2312, Evgeniy_Smirnov, 770099, 28102022, 48, 2596262, 6, 2330'
+# data_car = 'VOLVO-075, Ivan Petrov, 84325, 30102022, 70, 625658, 8, 2285'
 byte_encode = data_car.encode()
 
 
