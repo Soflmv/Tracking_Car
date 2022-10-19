@@ -38,6 +38,8 @@ def car_data_indb(request):
                                                           'rem_fuel': rem_fuel})
     except ValueError:
         return render(request, 'car_data/main.html')
+    except TypeError:
+        return render(request, 'car_data/main.html')
 
 
 
