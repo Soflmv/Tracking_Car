@@ -12,7 +12,7 @@
 <body>
 <!--Таблица-->
 <table class="table">
-    <caption>Данные местонахождения и движения автомобилей</caption>
+    <caption>Данные по автомобилям</caption>
 <thead>
     <tr>
       <th scope="col">Марка</th>
@@ -42,10 +42,14 @@
 </table>
 <main>
 <!--Кнопки-->
-<form action="{% url 'clear' %}" method="post">
-    {% csrf_token %}
-    <button class="custom-btn btn-7"><span>Очистить форму</span></button>
-</form>
+    <form action="{% url 'clear' %}" method="post">
+        {% csrf_token %}
+        <button class="custom-btn btn-7"><span>Очистить форму</span></button>
+    </form>
+    <form action="{% url 'pdf_file' %}" method="post">
+        {% csrf_token %}
+        <button class="custom-btn btn-8" type="submit"><span>Получить в PDF</span></button>
+    </form>
 <!--Формы с данными-->
 <form class="data_cars" action="{% url 'car_data_indb' %}"  method="post">
     {% csrf_token %}

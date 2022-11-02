@@ -12,7 +12,7 @@ print('Sock name: {}'.format(sock.getsockname()))
 conn = psycopg2.connect(
     database='tracking',
     user='postgres',
-    password='************',
+    password='069miroslav069',
     host='127.0.0.1',
     port='5432'
 )

@@ -12,6 +12,5 @@ class Info(models.Model):
     fuel_condition = models.IntegerField()
 
     def __str__(self):
-        return self.car_brand, self.driver, self.car_number, self.date, self.speed, self.coordinates, self.run, \
-               self.fuel_condition
+        return self.car_brand
 

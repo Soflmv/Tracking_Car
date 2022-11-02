@@ -1,3 +1,9 @@
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import A4
+
 from django.shortcuts import render
 from .models import Info
 from django.db.models import Max, Min
@@ -8,6 +14,9 @@ def clear(request):
 
 
 def car_data_indb(request):
+
+    global data_all
+
     try:
         if request.method == 'POST':
             date = request.POST.get('date')
@@ -15,7 +24,8 @@ def car_data_indb(request):
 
             data_all = Info.objects.filter(car_brand=data_car).filter(date=date).order_by('-run')
 
-            max_min_speed = Info.objects.filter(date=date).filter(car_brand=data_car).aggregate(Max('speed'), Min('speed'))
+            max_min_speed = Info.objects.filter(date=date).filter(car_brand=data_car).aggregate(Max('speed'),
+                                                                                                Min('speed'))
             max = max_min_speed.get('speed__max')
             min = max_min_speed.get('speed__min')
 
@@ -42,6 +52,32 @@ def car_data_indb(request):
         return render(request, 'car_data/main.html')
 
 
+def pdf_file(request):
+    buffer = io.BytesIO()
+    c = canvas.Canvas(buffer, pagesize=A4, bottomup=0)
+    text_object = c.beginText()
+    text_object.setTextOrigin(inch, inch)
+    text_object.setFont('Helvetica', 10)
 
+    lines = []
 
+    for i in data_all:
+        lines.append(str(i.car_brand))
+        lines.append(str(i.driver))
+        lines.append(str(i.car_number))
+        lines.append(str(i.date))
+        lines.append(str(i.speed))
+        lines.append(str(i.coordinates))
+        lines.append(str(i.run))
+        lines.append(str(i.fuel_condition))
+        lines.append(str('----------------------'))
 
+    for line in lines:
+        text_object.textLine(line)
+
+    c.drawText(text_object)
+    c.showPage()
+    c.save()
+    buffer.seek(0)
+
+    return FileResponse(buffer, as_attachment=True, filename='data_car.pdf')
